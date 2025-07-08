@@ -31,12 +31,13 @@ logger = logging.getLogger(__name__)
 
 # Configuration
 MCP_PORT = int(os.getenv("MCP_PORT", 8001))
+MCP_HOST = os.getenv("MCP_HOST", "0.0.0.0")
 SCHOOL_ID = os.getenv("SCHOOL_ID", "CxnRNYOtBo6VrqiCb4AA")
 DEFAULT_LANGUAGE = os.getenv("DEFAULT_LANGUAGE", "en")
 TARGET_OFFER_ID = os.getenv("TARGET_OFFER_ID", "ob6V4HfZK9Gs95sii4Cf")
 
 # Create the MCP server
-mcp = FastMCP("Meyers Scraper", port=MCP_PORT, streamable_http_path="/meyers-scraper")
+mcp = FastMCP("Meyers Scraper", port=MCP_PORT, host=MCP_HOST, streamable_http_path="/meyers-scraper")
 
 
 def register_meyers_tools(mcp: FastMCP):
