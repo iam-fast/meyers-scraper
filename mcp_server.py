@@ -401,7 +401,7 @@ register_meyers_tools(mcp)
 
 if __name__ == "__main__":
     print("🚀 Starting Meyers Scraper MCP Server...")
-    print(f"📍 Server will be available at: http://localhost:{MCP_PORT}")
+    print(f"📍 Server will be available at: http://{MCP_HOST}:{MCP_PORT}")
     print("🔧 Streamable HTTP path: /meyers-scraper")
     print("📚 Available tools:")
     print("   - get_all_menus: Fetch all available menus")
