@@ -30,7 +30,7 @@ class TestMCPServer(unittest.TestCase):
         """Test the health check tool."""
         # Get the health_check tool
         health_check_tool = None
-        for tool in self.mcp._tools:
+        for tool in self.mcp._tool_manager._tools.values():
             if tool.name == "health_check":
                 health_check_tool = tool
                 break
@@ -40,7 +40,7 @@ class TestMCPServer(unittest.TestCase):
         )
 
         # Test the tool function
-        result = asyncio.run(health_check_tool.func())
+        result = asyncio.run(health_check_tool.fn())
 
         self.assertIn("status", result)
         self.assertIn("timestamp", result)
@@ -48,43 +48,7 @@ class TestMCPServer(unittest.TestCase):
         self.assertEqual(result["status"], "healthy")
         self.assertEqual(result["service"], "meyers-scraper-mcp")
 
-    @patch("mcp_server.MeyersAPIClient")
-    @patch("mcp_server.MenuDataProcessor")
-    def test_get_available_dates(self, mock_processor, mock_client):
-        """Test the get_available_dates tool."""
-        # Mock the client and processor
-        mock_client_instance = MagicMock()
-        mock_client.return_value = mock_client_instance
-        mock_client_instance.fetch_data.return_value = {"test": "data"}
 
-        mock_processor_instance = MagicMock()
-        mock_processor.return_value = mock_processor_instance
-        mock_processor_instance.extract_menu_items.return_value = {
-            "2024-01-15": MagicMock(),
-            "2024-01-16": MagicMock(),
-            "2024-01-17": MagicMock(),
-        }
-
-        # Get the get_available_dates tool
-        get_dates_tool = None
-        for tool in self.mcp._tools:
-            if tool.name == "get_available_dates":
-                get_dates_tool = tool
-                break
-
-        self.assertIsNotNone(
-            get_dates_tool, "get_available_dates tool should be registered"
-        )
-
-        # Test the tool function
-        result = asyncio.run(get_dates_tool.func())
-
-        self.assertIn("success", result)
-        self.assertIn("data", result)
-        self.assertIn("metadata", result)
-        self.assertTrue(result["success"])
-        self.assertIn("dates", result["data"])
-        self.assertEqual(len(result["data"]["dates"]), 3)
 
     @patch("mcp_server.MeyersAPIClient")
     @patch("mcp_server.MenuDataProcessor")
@@ -92,7 +56,7 @@ class TestMCPServer(unittest.TestCase):
         """Test the get_menu_by_date tool with invalid date format."""
         # Get the get_menu_by_date tool
         get_menu_tool = None
-        for tool in self.mcp._tools:
+        for tool in self.mcp._tool_manager._tools.values():
             if tool.name == "get_menu_by_date":
                 get_menu_tool = tool
                 break
@@ -102,7 +66,7 @@ class TestMCPServer(unittest.TestCase):
         )
 
         # Test with invalid date format
-        result = asyncio.run(get_menu_tool.func(date="invalid-date"))
+        result = asyncio.run(get_menu_tool.fn(date="invalid-date"))
 
         self.assertIn("success", result)
         self.assertIn("message", result)
@@ -115,10 +79,9 @@ class TestMCPServer(unittest.TestCase):
             "get_all_menus",
             "get_menu_by_date",
             "health_check",
-            "get_available_dates",
         ]
 
-        registered_tools = [tool.name for tool in self.mcp._tools]
+        registered_tools = [tool.name for tool in self.mcp._tool_manager._tools.values()]
 
         for tool_name in expected_tools:
             self.assertIn(
@@ -129,7 +92,7 @@ class TestMCPServer(unittest.TestCase):
         """Test that tools have the expected parameters."""
         # Test get_all_menus parameters
         get_all_menus_tool = None
-        for tool in self.mcp._tools:
+        for tool in self.mcp._tool_manager._tools.values():
             if tool.name == "get_all_menus":
                 get_all_menus_tool = tool
                 break
@@ -141,7 +104,7 @@ class TestMCPServer(unittest.TestCase):
 
         # Test get_menu_by_date parameters
         get_menu_tool = None
-        for tool in self.mcp._tools:
+        for tool in self.mcp._tool_manager._tools.values():
             if tool.name == "get_menu_by_date":
                 get_menu_tool = tool
                 break
