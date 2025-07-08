@@ -1,6 +1,6 @@
 # Meyers Scraper API
 
-A Flask-based REST API that provides endpoints to fetch and extract menu items from the Meyers API. This API wraps the existing Meyers scraper functionality and provides a clean HTTP interface.
+A FastAPI-based REST API that provides endpoints to fetch and extract menu items from the Meyers API. This API wraps the existing Meyers scraper functionality and provides a clean HTTP interface.
 
 ## Features
 
@@ -36,6 +36,11 @@ A Flask-based REST API that provides endpoints to fetch and extract menu items f
 2. **Run the API:**
    ```bash
    python app.py
+   ```
+
+   Or use the startup script:
+   ```bash
+   ./scripts/start_api.sh
    ```
 
 ## API Endpoints
@@ -278,13 +283,39 @@ pytest
 
 ```
 meyers-scraper/
-├── app.py              # Main Flask API application
-├── main.py             # Original scraper logic
-├── requirements.txt    # Python dependencies
-├── Dockerfile          # Docker configuration
-├── docker-compose.yml  # Docker Compose configuration
-├── .env               # Environment variables
-└── API_README.md      # This documentation
+├── app.py                 # Main FastAPI application
+├── main.py                # Standalone script entry point
+├── mcp_server.py          # MCP server entry point
+├── src/                   # Core application code
+│   ├── __init__.py
+│   ├── models.py          # Data models (MenuItem, DateMenu)
+│   ├── client.py          # API client for Meyers
+│   ├── processor.py       # Data processing logic
+│   └── display.py         # Display and output utilities
+├── tests/                 # Test files
+│   ├── __init__.py
+│   ├── test_api.py        # API endpoint tests
+│   ├── test_core.py       # Core functionality tests
+│   └── test_mcp.py        # MCP server tests
+├── scripts/               # Startup and utility scripts
+│   ├── setup.sh           # Initial setup script
+│   ├── start_api.sh       # API startup script
+│   ├── start_mcp.sh       # MCP server startup script
+│   └── run_tests.py       # Test runner
+├── config/                # Configuration files
+│   ├── .env               # Environment variables
+│   └── .env.example       # Environment variables template
+├── deploy/                # Deployment files
+│   ├── Dockerfile         # Docker configuration
+│   └── docker-compose.yml # Docker Compose setup
+├── requirements.txt       # Python dependencies
+├── pyproject.toml         # Project configuration
+└── docs/                  # Documentation
+    ├── API_README.md      # This documentation
+    ├── MCP_README.md      # MCP server documentation
+    ├── CHANGELOG.md       # Version history
+    ├── CONTRIBUTING.md    # Contributing guidelines
+    └── SECURITY.md        # Security policy
 ```
 
 ## Deployment

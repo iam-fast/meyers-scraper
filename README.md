@@ -24,14 +24,14 @@ meyers-scraper/
 ├── tests/                 # Test files
 │   ├── __init__.py
 │   ├── test_api.py        # API endpoint tests
-│   └── test_core.py       # Core functionality tests
+│   ├── test_core.py       # Core functionality tests
+│   └── test_mcp.py        # MCP server tests
 ├── docs/                  # Documentation
 │   ├── API_README.md      # API documentation
 │   ├── MCP_README.md      # MCP server documentation
 │   ├── CHANGELOG.md       # Version history
 │   ├── CONTRIBUTING.md    # Contributing guidelines
-│   ├── SECURITY.md        # Security policy
-│   └── PUBLISHING_CHECKLIST.md # Publishing guidelines
+│   └── SECURITY.md        # Security policy
 ├── scripts/               # Startup and utility scripts
 │   ├── setup.sh           # Initial setup script
 │   ├── start_api.sh       # API startup script
