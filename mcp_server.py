@@ -37,7 +37,12 @@ DEFAULT_LANGUAGE = os.getenv("DEFAULT_LANGUAGE", "en")
 TARGET_OFFER_ID = os.getenv("TARGET_OFFER_ID", "ob6V4HfZK9Gs95sii4Cf")
 
 # Create the MCP server
-mcp = FastMCP("Meyers Scraper", port=MCP_PORT, host=MCP_HOST, streamable_http_path="/meyers-scraper")
+mcp = FastMCP(
+    "Meyers Scraper",
+    port=MCP_PORT,
+    host=MCP_HOST,
+    streamable_http_path="/meyers-scraper",
+)
 
 
 def register_meyers_tools(mcp: FastMCP):
