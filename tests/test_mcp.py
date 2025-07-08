@@ -48,8 +48,6 @@ class TestMCPServer(unittest.TestCase):
         self.assertEqual(result["status"], "healthy")
         self.assertEqual(result["service"], "meyers-scraper-mcp")
 
-
-
     @patch("mcp_server.MeyersAPIClient")
     @patch("mcp_server.MenuDataProcessor")
     def test_get_menu_by_date_invalid_format(self, mock_processor, mock_client):
@@ -81,7 +79,9 @@ class TestMCPServer(unittest.TestCase):
             "health_check",
         ]
 
-        registered_tools = [tool.name for tool in self.mcp._tool_manager._tools.values()]
+        registered_tools = [
+            tool.name for tool in self.mcp._tool_manager._tools.values()
+        ]
 
         for tool_name in expected_tools:
             self.assertIn(
