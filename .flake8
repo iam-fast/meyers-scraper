@@ -1,0 +1,15 @@
+[flake8]
+max-line-length = 127
+max-complexity = 20
+exclude = 
+    venv/,
+    .venv/,
+    __pycache__/,
+    *.pyc,
+    .git/
+ignore = 
+    E402,
+    W503,
+    W504
+per-file-ignores =
+    tests/*:E402 

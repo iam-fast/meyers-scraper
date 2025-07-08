@@ -1,1 +1,1 @@
-# Core package for Meyers Scraper 
+# Core package for Meyers Scraper
